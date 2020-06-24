@@ -27,20 +27,21 @@ jobs:
         run: |
           xcode-select -p
           xcodebuild -version
-      - name: Set Xcode to 10.3
+      - name: Set Xcode to 11.5
         run: |
-          sudo xcode-select -s /Applications/Xcode_10.3.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_11.5.app/Contents/Developer
           xcodebuild -version
       - name: MacPorts
         uses: WildbookOrg/actions/setup-macports@v1.0.0
-      - name: Install first Macport double-conversion using Cmake
+      - name: Install example port and check version of Cmake
         run: |
           port version
-          ls -l $(which cmake)
+          ls -al $(which cmake)
           cmake --version
-          sudo port -vs install double-conversion
+          sudo port -vs install eigen3-devel
+          ls -al /opt/local/var/macports/software/
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with: 
-          name: double-conversion
-          path: /opt/local/var/macports/software/double-conversion
+          name: eigen3
+          path: /opt/local/var/macports/software/eigen3-devel
